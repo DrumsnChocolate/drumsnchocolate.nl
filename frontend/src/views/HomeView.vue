@@ -1,7 +1,5 @@
 <template>
-  <h1>
-    This page intentionally left blank
-  </h1>
+  <hero-section/>
 </template>
 
 <script setup lang="ts">
