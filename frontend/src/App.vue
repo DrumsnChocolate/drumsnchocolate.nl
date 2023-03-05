@@ -28,7 +28,7 @@ a {
   text-decoration: none;
   color: var(--drums-blue);
 }
-
+ 
 a:hover {
   text-decoration: underline;
 }
