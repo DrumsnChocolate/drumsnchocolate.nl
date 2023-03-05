@@ -2,7 +2,7 @@
 <div class="triangle-top-right"></div>
 </template>
 
-<script>
+<script setup lang="ts">
 </script>
 
 <style>
