@@ -2,14 +2,14 @@
   <div
     style="
       height: 50vh;
-      width: 100vw;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: stretch;
     "
   >
     <div class="rectangle-top"></div>
-    <div class="rectangle-mid">
+    <div>
       <div class="diagonal-split" style="position: relative">
         <div class="header-position">
           <div
@@ -35,20 +35,12 @@
 
 <script setup lang="ts"></script>
 
-<style>
+<style lang="scss" scoped>
 .rectangle-top {
   flex-grow: 1;
   width: 100vw;
   background-color: var(--chocolate-cosmos);
 }
-.rectangle-mid {
-  width: 100vw;
-}
-.rectangle-bottom {
-  flex-grow: 1;
-  width: 100vw;
-}
-
 .diagonal-split {
   border-top: 20vh solid var(--chocolate-cosmos);
   border-right: 50vw solid var(--platinum);
