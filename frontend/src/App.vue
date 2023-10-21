@@ -1,11 +1,4 @@
 <template>
-  <!-- <div>
-    <RouterLink to="/">Home</RouterLink>
-  </div>
-  
-  <div>
-    <RouterLink to="/about">About</RouterLink>
-  </div> -->
   <RouterView />
 </template>
 
@@ -13,61 +6,79 @@
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 
-<style>
-
+<style lang="scss">
 :root {
   /* https://colorpalettes.net/color-palette-4342/ */
-    --drums-blue: #53627A;
-    --chocolate-brown: #5F3E3A;
-    --drumsnchocolate-creme: #DCD9D3;
-    --drumsnchocolate-grey-blue: #8C9DA7;
-    --drumsnchocolate-dark-purple: #4D4049;
+  --drums-blue: #53627a;
+  --chocolate-cosmos: #5f021f;
+  --platinum: #d8dce4;
+  --sunglow: #fdca40;
 }
 
 a {
   text-decoration: none;
-  color: var(--drums-blue);
+  font-weight: bold;
+  &:hover {
+    text-decoration: underline;
+  }
 }
- 
-a:hover {
-  text-decoration: underline;
-}
-
-a:visited {
-  text-decoration: none;
-  color: var(--drumsnchocolate-dark-purple) !important;
-}
-
-
 
 .drums {
-    color: var(--drums-blue);
+  color: var(--drums-blue) !important;
 }
 
 .chocolate {
-    color: var(--chocolate-brown);
+  color: var(--chocolate-cosmos) !important;
 }
 
-.creme {
-  color: var(--drumsnchocolate-creme);
+.platinum {
+  color: var(--platinum) !important;
+}
+
+.sunglow {
+  color: var(--sunglow) !important;
+}
+
+.bg-platinum {
+  background-color: var(--platinum);
+  color: black;
+  a {
+    color: var(--chocolate-cosmos);
+    &:visited {
+      color: var(--drums-blue);
+    }
+  }
+  h1,
+  h2,
+  h3 {
+    color: var(--chocolate-cosmos);
+  }
 }
 
 .bg-drums {
   background-color: var(--drums-blue);
+  color: white;
+  a {
+    color: var(--sunglow);
+    &:visited {
+      color: white;
+    }
+  }
 }
 
-.bg-drums a {
-  color: var(--drumsnchocolate-grey-blue);
-}
-
-
-.bg-creme {
-  background-color: var(--drumsnchocolate-creme);
-}
-.bg-grey-blue {
-  background-color: var(--drumsnchocolate-grey-blue);
-}
-.bg-dark-purple {
-  background-color: var(--drumsnchocolate-dark-purple);
+.bg-chocolate {
+  background-color: var(--chocolate-cosmos);
+  color: var(--platinum);
+  a {
+    color: var(--sunglow);
+    &:visited {
+      color: var(--platinum);
+    }
+  }
+  h1,
+  h2,
+  h3 {
+    color: var(--sunglow);
+  }
 }
 </style>
