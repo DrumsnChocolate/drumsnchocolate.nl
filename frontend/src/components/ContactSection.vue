@@ -2,6 +2,7 @@
   <div
     class="bg-drums"
     style="
+      min-height: 218px;
       height: 50vh;
       width: 100%;
       display: flex;
@@ -11,29 +12,39 @@
   >
     <div class="rectangle-mid">
       <div class="diagonal-split" style="position: relative">
-        <div class="header-position">
-          <div
-            style="display: flex; justify-content: center; align-items: center; width: 0; height: 0"
-          >
-            <h1 class="platinum" style="white-space: nowrap">CONTACT</h1>
-          </div>
+        <div
+          class="header-position"
+          style="display: flex; justify-content: center; align-items: center"
+        >
+          <h1 class="platinum" style="white-space: nowrap">CONTACT</h1>
         </div>
       </div>
     </div>
     <div class="rectangle-bottom">
-      <a href="mailto:matbronk@gmail.com">EMAIL</a>
-      <a href="https://github.com/DrumsnChocolate">GITHUB</a>
+      <div style="position: relative; height: 0; width: 0">
+        <div
+          style="
+            position: absolute;
+            right: 25vw;
+            height: 0;
+            width: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <div style="display: flex; column-gap: 10px">
+            <a href="mailto:matbronk@gmail.com">EMAIL</a>
+            <a href="https://github.com/DrumsnChocolate">GITHUB</a>
+            <a href="public/Curriculum_Vitae.pdf">CV</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.gradient {
-  height: 10vh;
-  width: 100%;
-  background-image: linear-gradient(var(--platinum), var(--drums-blue));
-}
-
 .diagonal-split {
   border-top: 20vh solid var(--platinum);
   border-right: 50vw solid var(--platinum);
@@ -45,8 +56,8 @@
 
 .header-position {
   position: absolute;
-  top: calc(10vh);
-  right: calc(100vw / 4);
+  top: 10vh;
+  right: 25vw;
   width: 0;
   height: 0;
 }

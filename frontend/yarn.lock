@@ -2527,6 +2527,11 @@ vue-router@^4.1.6:
   dependencies:
     "@vue/devtools-api" "^6.4.5"
 
+vue-screen@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/vue-screen/-/vue-screen-2.3.2.tgz#5ce82765b64d1c2f8785c6e62873a24faabca4b0"
+  integrity sha512-xydUP1vC6slHPOFb90k6v4nT2gW7LSIhH+5nTrUUei8iJFdKQ8NY39K42HCyjVOZII1gN1jHMJeZjhMN6BsJ8g==
+
 vue-template-compiler@^2.7.14:
   version "2.7.14"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.7.14.tgz#4545b7dfb88090744c1577ae5ac3f964e61634b1"

@@ -1,6 +1,7 @@
 <template>
   <div
     style="
+      min-height: 218px;
       height: 50vh;
       width: 100%;
       display: flex;
@@ -15,25 +16,19 @@
           <div
             style="display: flex; justify-content: center; align-items: center; width: 0; height: 0"
           >
-            <h1 class="sunglow" style="white-space: nowrap">DRUMS n CHOCOLATE</h1>
-          </div>
-        </div>
-        <div class="subheader-position">
-          <div
-            style="display: flex; justify-content: center; align-items: center; width: 0; height: 0"
-          >
-            <!--            <h3 class="chocolate" style="white-space: nowrap">-->
-            <!--              Software Engineering with a pinch of Math-->
-            <!--            </h3>-->
+            <h1 v-if="grid.sm" class="sunglow" style="white-space: nowrap">DRUMS n CHOCOLATE</h1>
+            <h1 v-else class="sunglow">DRUMS n CHOCOLATE</h1>
           </div>
         </div>
       </div>
     </div>
-    <!--    <div class="rectangle-bottom bg-platinum"></div>-->
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useGrid } from 'vue-screen'
+const grid = useGrid('bootstrap')
+</script>
 
 <style lang="scss" scoped>
 .rectangle-top {
@@ -52,16 +47,8 @@
 
 .header-position {
   position: absolute;
-  top: calc(-10vh);
-  right: calc(100vw / 4);
-  width: 0;
-  height: 0;
-}
-
-.subheader-position {
-  position: absolute;
-  top: calc(10vh);
-  right: calc(-100vw / 4);
+  top: -10vh;
+  right: 25vw;
   width: 0;
   height: 0;
 }
