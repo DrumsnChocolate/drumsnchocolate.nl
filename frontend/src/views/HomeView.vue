@@ -11,7 +11,7 @@ import HeroSection from '@/components/HeroSection.vue'
 import AboutSection from '@/components/AboutSection.vue'
 import ContactSection from '@/components/ContactSection.vue'
 </script>
-
+'
 <style lang="scss">
 .page {
   min-height: 100vh;
@@ -20,3 +20,4 @@ import ContactSection from '@/components/ContactSection.vue'
   width: 100vw;
 }
 </style>
+'
