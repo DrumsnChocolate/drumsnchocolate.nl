@@ -1,0 +1,36 @@
+:root {
+    /* variables */
+
+    /* chocolate palette */
+    --chocolate-regular: #a92614;
+    --chocolate-dark: #6a201f;
+    --chocolate-surface: #feffe8;
+    --chocolate-surface-emphasis: #e29279;
+    --chocolate-highlight: #fb6522;
+
+    /* drums palette */
+    --drums-regular: #1466a9;
+    --drums-dark: #201f6b;
+    --drums-surface: #e5feff;
+    --drums-surface-emphasis: #79c9e2;
+    --drums-highlight: #23b6fb;
+
+    /* global settings */
+    width: 100vw;
+    background-color: var(--chocolate-surface);
+}
+
+p {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--drums-regular);
+    margin: 0;
+}
