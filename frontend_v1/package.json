@@ -19,6 +19,7 @@
     "format": "oxfmt src/"
   },
   "dependencies": {
+    "@vue/devtools-api": "^8.2.1",
     "pinia": "^4.0.2",
     "vue": "^3.5.40"
   },
