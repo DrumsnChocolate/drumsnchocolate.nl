@@ -5,6 +5,7 @@
     --chocolate-regular: #a92614;
     --chocolate-dark: #6a201f;
     --chocolate-surface: #feffe8;
+    --chocolate-surface-rgb: 254, 255, 232;
     --chocolate-surface-emphasis: #e29279;
     --chocolate-highlight: #fb6522;
 
@@ -20,7 +21,7 @@
     background-color: var(--chocolate-surface);
 }
 
-p {
+p, span {
     font-family: 'Times New Roman', Times, serif;
 }
 
@@ -33,4 +34,6 @@ h6 {
     font-family: 'Courier New', Courier, monospace;
     color: var(--drums-regular);
     margin: 0;
+    letter-spacing: 0.2em;
+    font-weight: 300;
 }
