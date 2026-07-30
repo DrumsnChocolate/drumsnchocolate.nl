@@ -16,9 +16,11 @@ const logoAlt = computed(() => {
 <template>
     <div class="experience">
         <div class="logo-container" :style="logoContainerDynamicStyle">
-            <div class="logo-padding">
-                <img class="logo" :src="logoSrc" :alt="logoAlt" />
-            </div>
+            <a :href="url">
+                <div class="logo-padding">
+                    <img class="logo" :src="logoSrc" :alt="logoAlt" />
+                </div>
+            </a>
         </div>
         <div class="body">
             <a :href="url">
