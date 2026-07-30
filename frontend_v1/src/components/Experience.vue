@@ -1,25 +1,8 @@
 <script setup lang="ts">
-import innicoLogo from '@/assets/Innico logo.svg'
 import { computed } from 'vue'
-type Props = {
-    companyTitle: string
-    role: string
-    url: string
-    description: string[]
-    logoSrc: string
-    backgroundColor: string
-}
-const props = withDefaults(defineProps<Props>(), {
-    companyTitle: 'Innico',
-    role: 'Full Stack Engineer / Data Scientist',
-    url: 'https://innico.nl',
-    description: () => [
-        'Innico is a software company in Enschede building a sales-first S&OP platform – helping wholesale and production SMEs replace spreadsheets with data-driven forecasting, inventory management, and pricing.',
-        "I joined early as a Full Stack Engineer and in-house Data Scientist, designing and building the core backend: automated order entry, customer-level pricing with approval workflows, and AI-driven demand forecasting. As the product matured, I was involved in the migration to a multi-tenant PostgreSQL architecture and led the modernization of the API layer for type-safety and long-term maintainability – enabling Innico to scale from one client to a true SaaS product. The platform became the client's single source of truth, cutting manual work, improving forecast accuracy, and reducing new-client onboarding from months to days.",
-    ],
-    logoSrc: innicoLogo,
-    backgroundColor: '#121c32',
-})
+import type { Experience } from './experience'
+
+const props = defineProps<Experience>()
 
 const logoContainerDynamicStyle = computed(() => {
     return `background-color: ${props.backgroundColor}`

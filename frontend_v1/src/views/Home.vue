@@ -3,6 +3,8 @@ import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 import Hero from '@/sections/Hero.vue'
 import Experiences from '@/sections/Experiences.vue'
+import Projects from '@/sections/Projects.vue'
+import Contact from '@/sections/Contact.vue'
 import { useTemplateRef, onMounted, onUnmounted } from 'vue'
 
 const navbar = useTemplateRef('navbar')
@@ -59,7 +61,7 @@ onUnmounted(() => {
     content: '';
     position: absolute;
     inset: 0;
-    bottom: -30px;
+    bottom: -10px;
     backdrop-filter: blur(5px);
     mask-image: linear-gradient(
         180deg,
@@ -112,6 +114,7 @@ onUnmounted(() => {
     flex-direction: column;
     margin-left: 10vw;
     margin-right: 10vw;
+    margin-bottom: 10vh;
     gap: 20vh;
 }
 </style>

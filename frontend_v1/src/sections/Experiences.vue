@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { experiences } from '@/assets/experiences'
 import Experience from '@/components/Experience.vue'
 </script>
 <template>
@@ -13,8 +14,9 @@ import Experience from '@/components/Experience.vue'
                 </div>
             </div>
             <div class="experiences-list">
-                <Experience />
-                <Experience />
+                <template v-for="experience in experiences">
+                    <Experience v-bind="experience" />
+                </template>
             </div>
         </div>
     </div>
