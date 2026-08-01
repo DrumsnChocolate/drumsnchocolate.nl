@@ -29,32 +29,36 @@
 
 <style scoped>
 .navbar-container {
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-top: 50px;
+    max-height: min(5vh, 40px);
+    margin-left: min(5vw, 40px);
+    margin-right: min(5vw, 40px);
+    margin-top: min(5vh, 40px);
     margin-bottom: 20px;
     display: flex;
-    align-items: flex-end;
 }
 
 .navbar-half-left {
-    flex-grow: 1;
+    width: 50%;
+    max-width: 50%;
     display: flex;
 }
 
 .navbar-half-right {
-    flex-grow: 1;
+    width: 50%;
+    max-width: 50%;
     display: flex;
     justify-content: flex-end;
     gap: 10%;
 }
 
 .navbar-link {
-    width: 20%;
+    width: 100%;
+    display: flex;
 }
 
 .navbar-logo {
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
 }
 </style>
