@@ -1,51 +1,71 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, useTemplateRef, onMounted, onUnmounted } from 'vue'
 
 const collapsed = ref(true)
+const navbar = useTemplateRef('navbar')
+const sidebar = useTemplateRef('sidebar')
+let navbarObserver: ResizeObserver | null = null
+let sidebarObserver: ResizeObserver | null = null
+
+onMounted(() => {
+    navbarObserver = new ResizeObserver(([entry]) => {
+        if (!entry) return
+        const el = entry.target as HTMLDivElement
+        document.documentElement.style.setProperty('--navbar-height', `${el.offsetHeight}px`)
+    })
+    navbarObserver.observe(navbar.value!)
+
+    sidebarObserver = new ResizeObserver(([entry]) => {
+        if (!entry) return
+        const el = entry.target as HTMLDivElement
+        document.documentElement.style.setProperty('--sidebar-width', `${el.offsetWidth}px`)
+    })
+    sidebarObserver.observe(sidebar.value!)
+})
+
+onUnmounted(() => {
+    navbarObserver?.disconnect()
+    sidebarObserver?.disconnect()
+})
 </script>
 
 <template>
-    <div class="fixed blurred">
-        <div class="container">
-            <div class="left">
-                <a class="logo" href="/">
-                    <img class="image" src="../assets/logo nav.svg" alt="<d/c>" />
-                </a>
-            </div>
-            <div class="right">
-                <div class="horizontal">
-                    <a href="#experience">
-                        <h3 style="display: inline">EXPERIENCE</h3>
-                    </a>
-                    <a href="#projects">
-                        <h3 style="display: inline">PROJECTS</h3>
-                    </a>
-                    <a href="#contact">
-                        <h3 style="display: inline">CONTACT</h3>
+    <div ref="root" class="navbar">
+        <div class="page-blur" :class="{ 'l-shape': !collapsed }"></div>
+        <div ref="navbar" class="fixed">
+            <div class="container">
+                <div class="left">
+                    <a class="logo" href="/">
+                        <img class="image" src="../assets/logo nav.svg" alt="<d/c>" />
                     </a>
                 </div>
-
-                <div class="vertical">
-                    <div class="row-end">
-                        <div class="hamburger" @click="() => (collapsed = !collapsed)">
-                            <div class="line" />
-                            <div class="line" />
-                            <div class="line" />
-                        </div>
+                <div class="right">
+                    <div class="horizontal">
+                        <a href="#experience"><h3 style="display: inline">EXPERIENCE</h3></a>
+                        <a href="#projects"><h3 style="display: inline">PROJECTS</h3></a>
+                        <a href="#contact"><h3 style="display: inline">CONTACT</h3></a>
                     </div>
-                    <div class="items blurred-left">
-                        <div class="list">
-                            <template v-if="!collapsed">
-                                <a href="#experience">
-                                    <h3 style="display: inline">EXPERIENCE</h3>
-                                </a>
-                                <a href="#projects">
-                                    <h3 style="display: inline">PROJECTS</h3>
-                                </a>
-                                <a href="#contact">
-                                    <h3 style="display: inline">CONTACT</h3>
-                                </a></template
-                            >
+
+                    <div class="vertical">
+                        <div class="row-end">
+                            <div class="hamburger" @click="() => (collapsed = !collapsed)">
+                                <div class="line" />
+                                <div class="line" />
+                                <div class="line" />
+                            </div>
+                        </div>
+                        <div ref="sidebar" class="items">
+                            <div class="list">
+                                <template v-if="!collapsed">
+                                    <a href="#experience"
+                                        ><h3 style="display: inline">EXPERIENCE</h3></a
+                                    >
+                                    <a href="#projects"
+                                        ><h3 style="display: inline">PROJECTS</h3></a
+                                    >
+                                    <a href="#contact"><h3 style="display: inline">CONTACT</h3></a>
+                                </template>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,6 +75,18 @@ const collapsed = ref(true)
 </template>
 
 <style scoped>
+.navbar {
+    /* Single source of truth for nav content height. Everything else
+       (container height, the pre-mount --navbar-h fallback) derives
+       from this instead of duplicating the value. */
+    --navbar-content-h: min(5vh, 40px);
+    --navbar-margin-top: min(5vh, 40px);
+    --navbar-margin-bottom: 20px;
+    --sidebar-w: 200px;
+
+    /* Real measured height once JS mounts; calc'd fallback until then. */
+}
+
 .fixed {
     position: fixed;
     top: 0;
@@ -64,20 +96,22 @@ const collapsed = ref(true)
     z-index: 1000;
 
     .container {
-        max-height: min(5vh, 40px);
+        height: var(--navbar-content-h);
         margin-left: min(5vw, 40px);
         margin-right: min(5vw, 40px);
-        margin-top: min(5vh, 40px);
-        margin-bottom: 20px;
+        margin-top: var(--navbar-margin-top);
+        margin-bottom: var(--navbar-margin-bottom);
         display: flex;
 
         .left {
             width: 50%;
+            height: 100%;
             display: flex;
 
             .logo {
                 flex-grow: 1;
                 max-width: 30vw;
+                height: 100%;
                 display: flex;
 
                 .image {
@@ -103,16 +137,19 @@ const collapsed = ref(true)
                     display: none;
                 }
             }
+
             @container (max-width: 500px) {
                 .vertical {
                     display: flex;
                     width: 100%;
                     justify-content: flex-end;
+
                     .row-end {
                         display: flex;
                         width: 100%;
                         height: 100%;
                         justify-content: flex-end;
+
                         .hamburger {
                             z-index: 1;
                             aspect-ratio: 1;
@@ -130,19 +167,16 @@ const collapsed = ref(true)
                             }
                         }
                     }
-
                     .items {
-                        position: absolute;
-                        top: 0;
-                        height: 100vh;
+                        position: fixed;
+                        top: var(--navbar-height);
                         right: 0;
                         display: flex;
                         flex-direction: column;
                         overflow: visible;
+
                         .list {
-                            position: relative;
-                            top: var(--navbar-height);
-                            margin-left: 40px;
+                            margin-left: 10%;
                             display: flex;
                             flex-direction: column;
                             overflow: visible;
@@ -154,107 +188,99 @@ const collapsed = ref(true)
     }
 }
 
-.blurred::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    bottom: -10px;
-    backdrop-filter: blur(5px);
-    mask-image: linear-gradient(
-        180deg,
-        rgb(0% 0% 0%) 0%,
-        rgb(0% 0% 0%) 70%,
-        rgb(0% 0% 0% / 0.87890625) calc(70% + 30% * 0.0625),
-        rgb(0% 0% 0% / 0.765625) calc(70% + 30% * 0.125),
-        rgb(0% 0% 0% / 0.66015625) calc(70% + 30% * 0.1875),
-        rgb(0% 0% 0% / 0.5625) calc(70% + 30% * 0.25),
-        rgb(0% 0% 0% / 0.47265625) calc(70% + 30% * 0.3125),
-        rgb(0% 0% 0% / 0.390625) calc(70% + 30% * 0.375),
-        rgb(0% 0% 0% / 0.31640625) calc(70% + 30% * 0.4375),
-        rgb(0% 0% 0% / 0.25) calc(70% + 30% * 0.5),
-        rgb(0% 0% 0% / 0.19140625) calc(70% + 30% * 0.5625),
-        rgb(0% 0% 0% / 0.140625) calc(70% + 30% * 0.625),
-        rgb(0% 0% 0% / 0.09765625) calc(70% + 30% * 0.6875),
-        rgb(0% 0% 0% / 0.0625) calc(70% + 30% * 0.75),
-        rgb(0% 0% 0% / 0.03515625) calc(70% + 30% * 0.8125),
-        rgb(0% 0% 0% / 0.015625) calc(70% + 30% * 0.875),
-        rgb(0% 0% 0% / 0.00390625) calc(70% + 30% * 0.9375),
-        rgb(0% 0% 0% / 0) 100%
-    );
-    -webkit-mask-image: linear-gradient(
-        180deg,
-        rgb(0% 0% 0%) 0%,
-        rgb(0% 0% 0%) 70%,
-        rgb(0% 0% 0% / 0.9990234375) calc(70% + 30% * 0.0625),
-        rgb(0% 0% 0% / 0.9921875) calc(70% + 30% * 0.125),
-        rgb(0% 0% 0% / 0.9736328125) calc(70% + 30% * 0.1875),
-        rgb(0% 0% 0% / 0.9375) calc(70% + 30% * 0.25),
-        rgb(0% 0% 0% / 0.8779296875) calc(70% + 30% * 0.3125),
-        rgb(0% 0% 0% / 0.7890625) calc(70% + 30% * 0.375),
-        rgb(0% 0% 0% / 0.6650390625) calc(70% + 30% * 0.4375),
-        rgb(0% 0% 0% / 0.5) calc(70% + 30% * 0.5),
-        rgb(0% 0% 0% / 0.3349609375) calc(70% + 30% * 0.5625),
-        rgb(0% 0% 0% / 0.2109375) calc(70% + 30% * 0.625),
-        rgb(0% 0% 0% / 0.1220703125) calc(70% + 30% * 0.6875),
-        rgb(0% 0% 0% / 0.0625) calc(70% + 30% * 0.75),
-        rgb(0% 0% 0% / 0.0263671875) calc(70% + 30% * 0.8125),
-        rgb(0% 0% 0% / 0.0078125) calc(70% + 30% * 0.875),
-        rgb(0% 0% 0% / 0.0009765625) calc(70% + 30% * 0.9375),
-        rgb(0% 0% 0% / 0) 100%
-    );
-    pointer-events: none;
-    z-index: -1;
-}
+.page-blur {
+    --v-fade-end: calc(var(--navbar-height) * 1.3);
+    --h-fade-end: calc(var(--sidebar-width) * 1.3);
 
-.blurred-left::before {
-    content: '';
-    position: absolute;
+    --v-mask: linear-gradient(
+        180deg,
+        black 0,
+        black var(--navbar-height),
+        rgb(0 0 0 / 0.999)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.0625),
+        rgb(0 0 0 / 0.992)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.125),
+        rgb(0 0 0 / 0.974)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.1875),
+        rgb(0 0 0 / 0.938)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.25),
+        rgb(0 0 0 / 0.878)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.3125),
+        rgb(0 0 0 / 0.789)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.375),
+        rgb(0 0 0 / 0.665)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.4375),
+        rgb(0 0 0 / 0.5)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.5),
+        rgb(0 0 0 / 0.335)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.5625),
+        rgb(0 0 0 / 0.211)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.625),
+        rgb(0 0 0 / 0.122)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.6875),
+        rgb(0 0 0 / 0.063)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.75),
+        rgb(0 0 0 / 0.026)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.8125),
+        rgb(0 0 0 / 0.008)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.875),
+        rgb(0 0 0 / 0.001)
+            calc(var(--navbar-height) + (var(--v-fade-end) - var(--navbar-height)) * 0.9375),
+        transparent var(--v-fade-end)
+    );
+
+    --h-mask: linear-gradient(
+        270deg,
+        black 0,
+        black var(--sidebar-width),
+        rgb(0 0 0 / 0.999)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.0625),
+        rgb(0 0 0 / 0.992)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.125),
+        rgb(0 0 0 / 0.974)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.1875),
+        rgb(0 0 0 / 0.938)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.25),
+        rgb(0 0 0 / 0.878)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.3125),
+        rgb(0 0 0 / 0.789)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.375),
+        rgb(0 0 0 / 0.665)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.4375),
+        rgb(0 0 0 / 0.5)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.5),
+        rgb(0 0 0 / 0.335)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.5625),
+        rgb(0 0 0 / 0.211)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.625),
+        rgb(0 0 0 / 0.122)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.6875),
+        rgb(0 0 0 / 0.063)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.75),
+        rgb(0 0 0 / 0.026)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.8125),
+        rgb(0 0 0 / 0.008)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.875),
+        rgb(0 0 0 / 0.001)
+            calc(var(--sidebar-width) + (var(--h-fade-end) - var(--sidebar-width)) * 0.9375),
+        transparent var(--h-fade-end)
+    );
+
+    position: fixed;
     inset: 0;
-    left: -10px;
     backdrop-filter: blur(5px);
-    mask-image: linear-gradient(
-        270deg,
-        rgb(0% 0% 0%) 0%,
-        rgb(0% 0% 0%) 70%,
-        rgb(0% 0% 0% / 0.87890625) calc(70% + 30% * 0.0625),
-        rgb(0% 0% 0% / 0.765625) calc(70% + 30% * 0.125),
-        rgb(0% 0% 0% / 0.66015625) calc(70% + 30% * 0.1875),
-        rgb(0% 0% 0% / 0.5625) calc(70% + 30% * 0.25),
-        rgb(0% 0% 0% / 0.47265625) calc(70% + 30% * 0.3125),
-        rgb(0% 0% 0% / 0.390625) calc(70% + 30% * 0.375),
-        rgb(0% 0% 0% / 0.31640625) calc(70% + 30% * 0.4375),
-        rgb(0% 0% 0% / 0.25) calc(70% + 30% * 0.5),
-        rgb(0% 0% 0% / 0.19140625) calc(70% + 30% * 0.5625),
-        rgb(0% 0% 0% / 0.140625) calc(70% + 30% * 0.625),
-        rgb(0% 0% 0% / 0.09765625) calc(70% + 30% * 0.6875),
-        rgb(0% 0% 0% / 0.0625) calc(70% + 30% * 0.75),
-        rgb(0% 0% 0% / 0.03515625) calc(70% + 30% * 0.8125),
-        rgb(0% 0% 0% / 0.015625) calc(70% + 30% * 0.875),
-        rgb(0% 0% 0% / 0.00390625) calc(70% + 30% * 0.9375),
-        rgb(0% 0% 0% / 0) 100%
-    );
-    -webkit-mask-image: linear-gradient(
-        270deg,
-        rgb(0% 0% 0%) 0%,
-        rgb(0% 0% 0%) 70%,
-        rgb(0% 0% 0% / 0.9990234375) calc(70% + 30% * 0.0625),
-        rgb(0% 0% 0% / 0.9921875) calc(70% + 30% * 0.125),
-        rgb(0% 0% 0% / 0.9736328125) calc(70% + 30% * 0.1875),
-        rgb(0% 0% 0% / 0.9375) calc(70% + 30% * 0.25),
-        rgb(0% 0% 0% / 0.8779296875) calc(70% + 30% * 0.3125),
-        rgb(0% 0% 0% / 0.7890625) calc(70% + 30% * 0.375),
-        rgb(0% 0% 0% / 0.6650390625) calc(70% + 30% * 0.4375),
-        rgb(0% 0% 0% / 0.5) calc(70% + 30% * 0.5),
-        rgb(0% 0% 0% / 0.3349609375) calc(70% + 30% * 0.5625),
-        rgb(0% 0% 0% / 0.2109375) calc(70% + 30% * 0.625),
-        rgb(0% 0% 0% / 0.1220703125) calc(70% + 30% * 0.6875),
-        rgb(0% 0% 0% / 0.0625) calc(70% + 30% * 0.75),
-        rgb(0% 0% 0% / 0.0263671875) calc(70% + 30% * 0.8125),
-        rgb(0% 0% 0% / 0.0078125) calc(70% + 30% * 0.875),
-        rgb(0% 0% 0% / 0.0009765625) calc(70% + 30% * 0.9375),
-        rgb(0% 0% 0% / 0) 100%
-    );
+    -webkit-backdrop-filter: blur(5px);
     pointer-events: none;
-    z-index: -1;
+    z-index: 999;
+
+    mask-image: var(--v-mask);
+    -webkit-mask-image: var(--v-mask);
+
+    &.l-shape {
+        mask-image: var(--v-mask), var(--h-mask);
+        -webkit-mask-image: var(--v-mask), var(--h-mask);
+        mask-composite: add;
+        -webkit-mask-composite: source-over;
+    }
 }
 </style>
