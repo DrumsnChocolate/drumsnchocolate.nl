@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 <template>
     <div class="section">
-        <h3>PROJECTS</h3>
+        <a href="#projects"><h3>PROJECTS</h3></a>
         <div class="projects-container">
             <h3 style="display: inline; color: black"><</h3>
             <h3 style="display: inline; color: var(--drums-regular)">coming</h3>

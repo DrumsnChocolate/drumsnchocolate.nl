@@ -23,7 +23,7 @@ const contactOptions: ContactOption[] = [
 </script>
 <template>
     <div class="section">
-        <h3>CONTACT ME</h3>
+        <a href="#contact"><h3>CONTACT ME</h3></a>
         <div class="contact-container">
             <div class="contact">
                 <div class="portrait-container">

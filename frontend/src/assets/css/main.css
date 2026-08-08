@@ -29,6 +29,13 @@ p, span {
     font-family: 'Times New Roman', Times, serif;
 }
 
+a {
+    color: var(--drums-regular);
+    &:visited {
+        color: var(--chocolate-regular) !important;
+    }
+}
+
 
 h1,
 h2,
@@ -37,8 +44,8 @@ h4,
 h5,
 h6 {
     font-family: 'Courier New', Courier, monospace;
-    color: var(--drums-regular);
     margin: 0;
     letter-spacing: 0.2em;
     font-weight: 300;
+
 }

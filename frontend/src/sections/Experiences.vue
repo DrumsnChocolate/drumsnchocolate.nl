@@ -4,7 +4,7 @@ import Experience from '@/components/Experience.vue'
 </script>
 <template>
     <div class="section">
-        <h3>EXPERIENCE</h3>
+        <a href="#experience"><h3>EXPERIENCE</h3></a>
         <div class="experiences-container">
             <div class="timeline">
                 <h4 class="timeline-label">TIME</h4>
