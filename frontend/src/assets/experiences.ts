@@ -1,6 +1,6 @@
 import type { Experience } from "@/components/experience"
-import innicoLogo from '@/assets/Innico logo.svg'
-import netlightLogo from '@/assets/Netlight logo.svg'
+import innicoLogo from '@/assets/innico-logo.svg'
+import netlightLogo from '@/assets/netlight-logo.svg'
 
 export const experiences: Experience[] = [
     {

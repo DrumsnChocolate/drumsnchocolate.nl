@@ -39,7 +39,7 @@ onUnmounted(() => {
                 <div class="left">
                     <a class="logo" href="/">
                         <div class="image-container">
-                            <img class="image" src="../assets/logo nav.svg" alt="<d/c>" />
+                            <img class="image" src="../assets/logo-nav.svg" alt="<d/c>" />
                         </div>
                     </a>
                 </div>

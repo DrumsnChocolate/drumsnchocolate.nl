@@ -2,7 +2,7 @@
 
 <template>
     <div class="hero-container">
-        <img class="hero-image" src="../assets/Logo wide.svg" alt="<drums/chocolate>" />
+        <img class="hero-image" src="../assets/logo-wide.svg" alt="<drums/chocolate>" />
     </div>
 </template>
 
