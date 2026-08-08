@@ -43,7 +43,7 @@ const contactOptions: ContactOption[] = [
 
 <style scoped>
 .section {
-    padding-top: var(--navbar-height);
+    padding-top: var(--navbar-v-fade-end);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -73,12 +73,11 @@ const contactOptions: ContactOption[] = [
 
 .portrait-container {
     height: 20vh;
-    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
 }
 
 .portrait {
-    height: 100%;
-    width: 100%;
     object-fit: contain;
     border-radius: 10px;
 }

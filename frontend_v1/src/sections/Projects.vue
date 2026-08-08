@@ -14,7 +14,7 @@
 
 <style scoped>
 .section {
-    padding-top: var(--navbar-height);
+    padding-top: var(--navbar-v-fade-end);
     display: flex;
     flex-direction: column;
     justify-content: center;

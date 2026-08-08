@@ -16,6 +16,10 @@
     --drums-surface-emphasis: #79c9e2;
     --drums-highlight: #23b6fb;
 
+    /* navbar blur fade endings --navbar-height and --navbar-width are defined in Navbar.vue */
+    --navbar-v-fade-end: calc(var(--navbar-height) * 1.3);
+    --navbar-h-fade-end: calc(var(--sidebar-width) * 1.3);
+
     /* global settings */
     width: 100vw;
     background-color: var(--chocolate-surface);
@@ -25,9 +29,6 @@ p, span {
     font-family: 'Times New Roman', Times, serif;
 }
 
-h1 {
-    font-size: ;
-}
 
 h1,
 h2,
