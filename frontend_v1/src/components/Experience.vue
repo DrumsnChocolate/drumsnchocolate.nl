@@ -4,7 +4,7 @@ import type { Experience } from './experience'
 
 const props = defineProps<Experience>()
 
-const logoContainerDynamicStyle = computed(() => {
+const logoDynamicStyle = computed(() => {
     return `background-color: ${props.backgroundColor}`
 })
 
@@ -17,13 +17,11 @@ const logoAlt = computed(() => {
     <div class="experience-container">
         <div class="experience">
             <div class="header">
-                <div class="logo-container" :style="logoContainerDynamicStyle">
-                    <a :href="url" class="logo">
-                        <div class="image-container">
-                            <img class="image" :src="logoSrc" :alt="logoAlt" />
-                        </div>
-                    </a>
-                </div>
+                <a :href="url" class="logo" :style="logoDynamicStyle">
+                    <div class="image-container">
+                        <img class="image" :src="logoSrc" :alt="logoAlt" />
+                    </div>
+                </a>
             </div>
             <div class="body">
                 <a :href="url">
@@ -61,28 +59,29 @@ const logoAlt = computed(() => {
         .header {
             display: flex;
             justify-content: center;
-            .logo-container {
-                display: flex;
+            align-items: flex-start;
+
+            @container (max-width: 520px) {
+                align-items: center;
+            }
+
+            .logo {
                 height: 20vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 aspect-ratio: 1;
                 border-radius: 10px;
-
-                .logo {
-                    flex-grow: 1;
+                .image-container {
                     display: flex;
+                    height: 75%;
+                    width: 75%;
+                    justify-content: center;
+                    align-items: center;
 
-                    .image-container {
-                        display: flex;
-                        height: 75%;
-                        width: 75%;
-                        padding: 12.5%;
-                        justify-content: center;
-                        align-items: center;
-
-                        .image {
-                            max-height: 100%;
-                            max-width: 100%;
-                        }
+                    .image {
+                        max-height: 100%;
+                        max-width: 100%;
                     }
                 }
             }
