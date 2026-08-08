@@ -1,39 +1,39 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, onMounted, onUnmounted } from 'vue'
 
-const collapsed = ref(true)
+const sidebarCollapsed = ref(true)
 const navbar = useTemplateRef('navbar')
 const sidebar = useTemplateRef('sidebar')
-let navbarObserver: ResizeObserver | null = null
-let sidebarObserver: ResizeObserver | null = null
+let navbarResizeObserver: ResizeObserver | null = null
+let sidebarResizeObserver: ResizeObserver | null = null
 
-const toggle = () => (collapsed.value = !collapsed.value)
+const toggle = () => (sidebarCollapsed.value = !sidebarCollapsed.value)
 
 onMounted(() => {
-    navbarObserver = new ResizeObserver(([entry]) => {
+    navbarResizeObserver = new ResizeObserver(([entry]) => {
         if (!entry) return
         const el = entry.target as HTMLDivElement
         document.documentElement.style.setProperty('--navbar-height', `${el.offsetHeight}px`)
     })
-    navbarObserver.observe(navbar.value!)
+    navbarResizeObserver.observe(navbar.value!)
 
-    sidebarObserver = new ResizeObserver(([entry]) => {
+    sidebarResizeObserver = new ResizeObserver(([entry]) => {
         if (!entry) return
         const el = entry.target as HTMLDivElement
         document.documentElement.style.setProperty('--sidebar-width', `${el.offsetWidth}px`)
     })
-    sidebarObserver.observe(sidebar.value!)
+    sidebarResizeObserver.observe(sidebar.value!)
 })
 
 onUnmounted(() => {
-    navbarObserver?.disconnect()
-    sidebarObserver?.disconnect()
+    navbarResizeObserver?.disconnect()
+    sidebarResizeObserver?.disconnect()
 })
 </script>
 
 <template>
     <div ref="root" class="root">
-        <div class="page-blur" :class="{ 'l-shape': !collapsed }"></div>
+        <div class="page-blur" :class="{ 'l-shape': !sidebarCollapsed }"></div>
         <div ref="navbar" class="navbar">
             <div class="container">
                 <div class="left">
@@ -50,20 +50,16 @@ onUnmounted(() => {
                         <a href="#contact"><h3 style="display: inline">CONTACT</h3></a>
                     </div>
 
-                    <div class="vertical">
-                        <div class="row-end">
-                            <div class="hamburger" @click="toggle">
-                                <div class="line" />
-                                <div class="line" />
-                                <div class="line" />
-                            </div>
-                        </div>
+                    <div class="hamburger" @click="toggle">
+                        <div class="line" />
+                        <div class="line" />
+                        <div class="line" />
                     </div>
                 </div>
             </div>
         </div>
         <div ref="sidebar" class="sidebar">
-            <template v-if="!collapsed">
+            <template v-if="!sidebarCollapsed">
                 <div class="list">
                     <a href="#experience" @click="toggle"
                         ><h3 style="display: inline">EXPERIENCE</h3></a
@@ -80,6 +76,7 @@ onUnmounted(() => {
 
 <style scoped>
 .root {
+    container-type: inline-size;
     .navbar {
         position: fixed;
         top: 0;
@@ -94,9 +91,9 @@ onUnmounted(() => {
             margin-top: min(5vh, 40px);
             margin-bottom: 20px;
             display: flex;
+            justify-content: space-between;
 
             .left {
-                width: 50%;
                 height: 100%;
                 display: flex;
 
@@ -117,8 +114,6 @@ onUnmounted(() => {
             }
 
             .right {
-                container-type: inline-size;
-                width: 50%;
                 display: flex;
                 justify-content: flex-end;
 
@@ -127,40 +122,28 @@ onUnmounted(() => {
                     width: 100%;
                     gap: 10%;
                     justify-content: flex-end;
-                    @container (max-width: 500px) {
+                    @container (max-width: 650px) {
                         display: none;
                     }
                 }
 
-                @container (max-width: 500px) {
-                    .vertical {
+                .hamburger {
+                    display: none;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    z-index: 1;
+                    aspect-ratio: 1;
+                    height: 100%;
+                    cursor: pointer;
+                    @container (max-width: 650px) {
                         display: flex;
+                    }
+
+                    .line {
+                        height: 4px;
                         width: 100%;
-                        justify-content: flex-end;
-
-                        .row-end {
-                            display: flex;
-                            width: 100%;
-                            height: 100%;
-                            justify-content: flex-end;
-
-                            .hamburger {
-                                z-index: 1;
-                                aspect-ratio: 1;
-                                height: 100%;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: space-around;
-                                cursor: pointer;
-
-                                .line {
-                                    height: 4px;
-                                    width: 100%;
-                                    border-radius: 2px;
-                                    background-color: var(--drums-regular);
-                                }
-                            }
-                        }
+                        border-radius: 2px;
+                        background-color: var(--drums-regular);
                     }
                 }
             }
@@ -183,6 +166,10 @@ onUnmounted(() => {
             flex-direction: column;
             gap: 20px;
             overflow: visible;
+        }
+
+        @container (min-width: 651px) {
+            display: none;
         }
     }
 
