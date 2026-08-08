@@ -324,13 +324,13 @@ onUnmounted(() => {
 
         position: fixed;
         inset: 0;
-        backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
+        backdrop-filter: blur(5px);
         pointer-events: none;
         z-index: 999;
 
-        mask-image: var(--v-mask);
         -webkit-mask-image: var(--v-mask);
+        mask-image: var(--v-mask);
 
         &.l-shape {
             mask-image: var(--v-mask), var(--h-mask);
