@@ -3017,11 +3017,6 @@ nopt@^7.2.1:
   dependencies:
     abbrev "^2.0.0"
 
-nostics@^1.1.4:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/nostics/-/nostics-1.2.0.tgz#1362df6de2ca8456b521914501abf6c52c4d7fb5"
-  integrity sha512-FGqEfhQjrvo1lL8KFifdTQiNwwQHJxC1jtYE1Rc54qF/jxONUNL+kC9gS1krX8Q65PgrQ5fCqH/I4NhWBvdSqg==
-
 npm-normalize-package-bin@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/npm-normalize-package-bin/-/npm-normalize-package-bin-6.0.0.tgz#d8cc44d7a9eff2a2a210e9b2442edf3824f2d227"
@@ -3265,13 +3260,6 @@ pify@^2.2.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
-
-pinia@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/pinia/-/pinia-4.0.2.tgz#ed71ec5818e6f26cbe8d2f552df8777d3413b615"
-  integrity sha512-yKVVA7bSj5oRZFp/Ab9wLlmyb5gPUYEiIm4ryiWTe/xe7PtkRdMVOp1X1ggvq0c6Uj7Q0Du1HnV2mtAwM0Ks1g==
-  dependencies:
-    nostics "^1.1.4"
 
 postcss-selector-parser@^7.1.0:
   version "7.1.4"
