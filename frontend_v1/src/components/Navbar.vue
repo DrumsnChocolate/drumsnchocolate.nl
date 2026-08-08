@@ -7,6 +7,8 @@ const sidebar = useTemplateRef('sidebar')
 let navbarObserver: ResizeObserver | null = null
 let sidebarObserver: ResizeObserver | null = null
 
+const toggle = () => (collapsed.value = !collapsed.value)
+
 onMounted(() => {
     navbarObserver = new ResizeObserver(([entry]) => {
         if (!entry) return
@@ -50,7 +52,7 @@ onUnmounted(() => {
 
                     <div class="vertical">
                         <div class="row-end">
-                            <div class="hamburger" @click="() => (collapsed = !collapsed)">
+                            <div class="hamburger" @click="toggle">
                                 <div class="line" />
                                 <div class="line" />
                                 <div class="line" />
@@ -63,9 +65,13 @@ onUnmounted(() => {
         <div ref="sidebar" class="sidebar">
             <template v-if="!collapsed">
                 <div class="list">
-                    <a href="#experience"><h3 style="display: inline">EXPERIENCE</h3></a>
-                    <a href="#projects"><h3 style="display: inline">PROJECTS</h3></a>
-                    <a href="#contact"><h3 style="display: inline">CONTACT</h3></a>
+                    <a href="#experience" @click="toggle"
+                        ><h3 style="display: inline">EXPERIENCE</h3></a
+                    >
+                    <a href="#projects" @click="toggle"
+                        ><h3 style="display: inline">PROJECTS</h3></a
+                    >
+                    <a href="#contact" @click="toggle"><h3 style="display: inline">CONTACT</h3></a>
                 </div>
             </template>
         </div>
