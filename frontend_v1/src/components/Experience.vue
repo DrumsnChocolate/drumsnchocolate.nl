@@ -14,65 +14,93 @@ const logoAlt = computed(() => {
 </script>
 
 <template>
-    <div class="experience">
-        <div class="logo-container" :style="logoContainerDynamicStyle">
-            <a :href="url">
-                <div class="logo-padding">
-                    <img class="logo" :src="logoSrc" :alt="logoAlt" />
+    <div class="experience-container">
+        <div class="experience">
+            <div class="header">
+                <div class="logo-container" :style="logoContainerDynamicStyle">
+                    <a :href="url" class="logo">
+                        <div class="image-container">
+                            <img class="image" :src="logoSrc" :alt="logoAlt" />
+                        </div>
+                    </a>
                 </div>
-            </a>
-        </div>
-        <div class="body">
-            <a :href="url">
-                <h2 class="title">{{ companyTitle }} | {{ role }}</h2>
-            </a>
+            </div>
+            <div class="body">
+                <a :href="url">
+                    <h2 class="title">{{ companyTitle }} | {{ role }}</h2>
+                </a>
 
-            <p class="description">
-                <template class="line" v-for="line in description">
-                    {{ line }}<br /><br />
-                </template>
-            </p>
+                <p class="description">
+                    <template class="line" v-for="line in description">
+                        {{ line }}<br /><br />
+                    </template>
+                </p>
+            </div>
         </div>
     </div>
 </template>
 
 <style scoped>
-.experience {
+.experience-container {
+    container-type: inline-size;
+    flex-grow: 1;
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
-    gap: 4vw;
-}
 
-.logo-container {
-    height: 20vh;
-    aspect-ratio: 1;
-    border-radius: 10px;
-}
+    .experience {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-grow: 1;
+        gap: 4vw;
 
-.logo-padding {
-    height: 75%;
-    width: 75%;
-    padding: 12.5%;
-}
+        @container (max-width: 520px) {
+            flex-direction: column;
+        }
 
-.logo {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-}
+        .header {
+            display: flex;
+            justify-content: center;
+            .logo-container {
+                display: flex;
+                height: 20vh;
+                aspect-ratio: 1;
+                border-radius: 10px;
 
-.body {
-    display: flex;
-    flex-direction: column;
-}
+                .logo {
+                    flex-grow: 1;
+                    display: flex;
 
-.title {
-    display: inline;
-    letter-spacing: 0;
-}
+                    .image-container {
+                        display: flex;
+                        height: 75%;
+                        width: 75%;
+                        padding: 12.5%;
+                        justify-content: center;
+                        align-items: center;
 
-.description {
-    display: inline;
+                        .image {
+                            max-height: 100%;
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+
+        .body {
+            display: flex;
+            flex-direction: column;
+
+            .title {
+                display: inline;
+                letter-spacing: 0;
+            }
+
+            .description {
+                display: inline;
+            }
+        }
+    }
 }
 </style>
